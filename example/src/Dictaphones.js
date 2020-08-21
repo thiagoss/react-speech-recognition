@@ -1,34 +1,20 @@
 import React, { useState } from 'react'
-import { DictaphoneWidgetA, DictaphoneWidgetB } from './Dictaphone'
 import SpeechRecognition from './SpeechRecognition'
+import SpeechRecognitionPanel from './SpeechRecognitionPanel'
 
 export default () => {
-  const [showFirstWidget, setShowFirstWidget] = useState(true)
-  const toggleShowFirstWidget = () => setShowFirstWidget(!showFirstWidget)
-
-  const listenContinuously = () => SpeechRecognition.startListening({
-    continuous: true,
-    language: 'en-GB'
-  })
-  const listenContinuouslyInChinese = () => SpeechRecognition.startListening({
-    continuous: true,
-    language: 'zh-CN'
-  })
-  const listenOnce = () => SpeechRecognition.startListening({ continuous: false })
-
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return null
   }
 
+  const [text, setText] = useState('');
+
   return (
     <div>
-      {showFirstWidget && <DictaphoneWidgetA />}
-      <DictaphoneWidgetB />
-      <button onClick={listenOnce}>Listen once</button>
-      <button onClick={listenContinuously}>Listen continuously</button>
-      <button onClick={listenContinuouslyInChinese}>Listen continuously (Chinese)</button>
-      <button onClick={toggleShowFirstWidget}>Toggle first widget</button>
-      <button onClick={SpeechRecognition.stopListening}>Stop</button>
+      <span>{text}</span>
+      <SpeechRecognitionPanel 
+        handleTranscript={(t) => setText(t)}
+	  />
     </div>
   )
 }
