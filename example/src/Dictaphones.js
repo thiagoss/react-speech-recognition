@@ -15,6 +15,9 @@ export default () => {
       <SpeechRecognitionPanel 
         handleTranscript={(t) => setText(t)}
 	  />
+      <SpeechRecognitionPanel 
+        handleTranscript={(t) => setText(t)}
+	  />
     </div>
   )
 }
